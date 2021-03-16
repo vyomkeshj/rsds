@@ -7,3 +7,4 @@ pub mod reactor;
 pub mod rpc;
 pub mod task;
 pub mod worker;
+pub mod dashboard;

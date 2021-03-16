@@ -17,6 +17,8 @@ use rsds::server::comm::CommRef;
 use rsds::server::core::CoreRef;
 use rsds::{setup_interrupt, setup_logging};
 
+use rsds::server::dashboard::dashboard;
+
 #[global_allocator]
 static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
@@ -88,6 +90,13 @@ async fn main() -> rsds::Result<()> {
     let mut opt = Opt::from_args();
 
     log::info!("rsds v0.1 started: {:?}", opt);
+
+
+    //todo:: figure out where to get the status from
+    thread::spawn(|| {
+        dashboard::run_dashboard();
+    }).join().expect("Thread panicked");
+
 
     setup_logging(opt.trace_file.take());
     let mut end_rx = setup_interrupt();
