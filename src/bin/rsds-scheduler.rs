@@ -17,7 +17,7 @@ use rsds::server::comm::CommRef;
 use rsds::server::core::CoreRef;
 use rsds::{setup_interrupt, setup_logging};
 
-use rsds::server::dashboard::dashboard;
+use rsds::server::healthcheck::dashboard;
 
 #[global_allocator]
 static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
@@ -91,13 +91,6 @@ async fn main() -> rsds::Result<()> {
 
     log::info!("rsds v0.1 started: {:?}", opt);
 
-
-    //todo:: figure out where to get the status from
-    thread::spawn(|| {
-        dashboard::run_dashboard();
-    }).join().expect("Thread panicked");
-
-
     setup_logging(opt.trace_file.take());
     let mut end_rx = setup_interrupt();
 
@@ -131,6 +124,7 @@ async fn main() -> rsds::Result<()> {
         let task_set = tokio::task::LocalSet::default();
         let comm_ref = CommRef::new(sender);
         let core_ref = CoreRef::default();
+
         task_set
             .run_until(async move {
                 let scheduler = observe_scheduler(core_ref.clone(), comm_ref.clone(), receiver);
@@ -159,6 +153,13 @@ async fn main() -> rsds::Result<()> {
             .await
             .expect("Rsds failed");
     }
+
+    //fixme: run on main thread
+    //todo:: figure out where to get the status from
+    thread::spawn(|| {
+        let core_ref = CoreRef::default();
+        dashboard::run_dashboard();
+    }).join().expect("Thread panicked");
 
     log::debug!("Waiting for scheduler to shut down...");
     scheduler_thread.join().expect("Scheduler thread failed");

@@ -16,7 +16,8 @@ impl SchedulerStatus {
                num_tasks: i32,
                status: String,
     ) -> Self {
-        SchedulerStatus { scheduler_address: addr, number_of_workers: num_workers, number_of_tasks: num_tasks, current_status: status }}
+        SchedulerStatus { scheduler_address: addr, number_of_workers:
+        num_workers, number_of_tasks: num_tasks, current_status: status }}
 
 }
 

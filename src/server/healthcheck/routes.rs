@@ -1,8 +1,8 @@
 use std::convert::Infallible;
 use warp::{self, Filter};
 
-use crate::server::dashboard::status_manager::MutexedSchedulerStatus;
-use crate::server::dashboard::handlers;
+use crate::server::healthcheck::status_manager::MutexedSchedulerStatus;
+use crate::server::healthcheck::handlers;
 
 
 pub fn register_dashboard_routes(

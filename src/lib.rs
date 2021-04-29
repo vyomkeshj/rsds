@@ -10,6 +10,8 @@ mod error;
 pub mod scheduler;
 pub mod server;
 pub mod worker;
+pub mod logger;
+pub mod logserver;
 
 #[cfg(test)]
 mod test_util;

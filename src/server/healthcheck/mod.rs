@@ -1,5 +1,5 @@
 pub mod handlers;
 mod routes;
-mod status_model;
+mod core_dump;
 mod status_manager;
 pub mod dashboard;

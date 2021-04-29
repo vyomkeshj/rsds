@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use tokio::sync::Mutex;
+use crate::server::healthcheck::core_dump::SchedulerStatus;
 
-use crate::server::dashboard::status_model::SchedulerStatus;
 
 pub type MutexedSchedulerStatus = Arc<Mutex<SchedulerStatus>>;
 

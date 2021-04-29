@@ -202,7 +202,7 @@ class DaskCluster:
                     "--nprocs", str(processes),
                     "--local-directory", "/tmp",
                     "--preload", USECASES_SCRIPT,
-                    "--no-dashboard"] + worker_args
+                    "--no-healthcheck"] + worker_args
 
         env = {
             "OMP_NUM_THREADS": "1",  # TODO
